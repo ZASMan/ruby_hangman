@@ -1,37 +1,46 @@
 #Array for all content
 words = []
 
-File.open("words.txt").each do |word|
+File.open("5desk.txt").each do |word|
   words << word
 end
 
+secret_word = words.sample
+
+blank_letters = Array.new(secret_word.length) { |x| x+1}
+
+blank_letters.map! { |num| num = "_" }
+
 game_data = {
-  :secret_word_letters => words.sample.split(""),
-  :revealed_letters => [],
+  :alphabet => ('a'..'z').to_a,
+  :secret_word_letters => secret_word.split(""),
+  :revealed_letters => blank_letters,
   :correct_guesses => [],
-  :incorrect_guesses => []
+  :incorrect_guesses => [],
+  :turns => secret_word.length
 }
+
+#This method should first see if it included with any of the secret word letters
+#If it is included, compare the revealed_letters array (which at the start will be
+#equal to "_" times the length of secret_word) with the secret_word_letters array.
+#and then make every "_" in the revealed_letters array equal to the index where the
+#letter occurs to the user choice letter
 
 def is_secret_word_letter(letter)
   if secret_word_letters.include?(letter)
     game_data[:correct_guesses] << letter
-    game_data[:revealed_letters
-end
-
-until game_data[:user_guesses] == game_data[:secret_word_letters] do
-
-  puts "Please type a letter to guess the content of the word"
-  user_choice = gets.chomp.to_s
-  until user_choice.length == 1
-    puts "Please only type one letter."
-    user_choice = gets.chomp.to_s
+    game_data[:revealed_letters] << letter
   end
-  game_data[:user_guesses] << user_choice[0]
-  #Display word so far _ _ _ _
-
-  #Prompt to guess letter
-
-  #Evaluate if letter is in word
-  #
-
 end
+
+puts "Please type a letter to guess the content of the word"
+
+=begin
+
+until user_choice.length == 1 and game_data[:alphabet].include? user_choice do
+  puts "Please guess a single letter."
+  user_choice = gets.chomp.to_s.downcase!
+end
+
+puts "You chose #{user_choice}"
+=end
