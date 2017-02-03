@@ -1,6 +1,8 @@
 module Hangman
   class Game
+
     attr_accessor :alphabet, :secret_word, :secret_word_letters, :revealed_letters, :correct_guesses, :incorrect_guesses, :turns, :secret_word, :game_over
+
     def initialize
       words = []
       File.open("5desk.txt").each do |word|
@@ -18,6 +20,8 @@ module Hangman
       @incorrect_guesses = []
       @turns = @secret_word.length
       @game_over = false
+      #Begin Game
+      self.play_game
     end
 
     def show_game_progress
@@ -48,11 +52,11 @@ module Hangman
 
     def play_game
       turn = 1
-      while turn < game_data[:turns]
+      while turn < @turns
         puts "Please guess a letter in the word."
         puts ""
         user_choice = gets.chomp.to_s
-        until game_data[:alphabet].include? user_choice and user_choice.length == 1 do
+        until @alphabet.include? user_choice and user_choice.length == 1 do
           puts "Please choose a single letter in the alphabet to guess the content of the word."
           user_choice = gets.chomp.to_s
         end
@@ -62,7 +66,6 @@ module Hangman
         turn +=1
       end
     end
-
-  end
 end
 
+game =  Hangman::Game.new
