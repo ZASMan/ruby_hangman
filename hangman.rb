@@ -3,10 +3,13 @@ class Game
       :incorrect_guesses, :turns, :secret_word, :game_over
 
   def initialize
+    puts "Welcome to hangman!"
+    puts ""
     words = []
     File.open("5desk.txt").each do |word|
       words << word.downcase.gsub!(/\W+/, '')
     end
+    puts "Secret word chosen!"
     #Alphabet to control user input
     @alphabet = ('a'..'z').to_a
     #Choose Random Word
@@ -24,10 +27,20 @@ class Game
   end
 
   def show_game_progress
+    puts "Here is the secret word:"
+    puts ""
     print @secret_word_letters
+    puts ""
+    puts "Here are the reavealed letters:"
     puts ""
     print @revealed_letters
     puts ""
+    puts "Here are the incorrect guesses:"
+    puts ""
+    print @incorrect_guesses
+    puts "Here are the correct guesses:"
+    puts ""
+    print @correct_guesses
   end
 
   def is_secret_word_letter(letter)
