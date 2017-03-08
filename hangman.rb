@@ -31,6 +31,7 @@ class Game
     puts ""
     print @secret_word_letters
     puts ""
+    puts ""
     puts "Here are the reavealed letters:"
     puts ""
     print @revealed_letters
@@ -38,9 +39,11 @@ class Game
     puts "Here are the incorrect guesses:"
     puts ""
     print @incorrect_guesses
+    puts ""
     puts "Here are the correct guesses:"
     puts ""
     print @correct_guesses
+    puts ""
   end
 
   def is_secret_word_letter(letter)
@@ -52,6 +55,7 @@ class Game
           indices << @secret_word_letters.index(letter)
         end
       end
+    # TODO: Revealed letters not mapping properly, showing up as 'nil' in the command line
     indices.each do |index|
       @revealed_letters.map! { |x| x = letter if @revealed_letters.index(x) == index }
     end
@@ -74,6 +78,7 @@ class Game
       is_secret_word_letter(user_choice)
       self.show_game_progress
       turn +=1
+      puts "Turn #{turn} complete!"
     end
   end
 end
