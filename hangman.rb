@@ -27,6 +27,7 @@ class Game
   end
 
   def show_game_progress
+    # TODO: Remove secret word in the final version :P
     puts "Here is the secret word:"
     puts ""
     print @secret_word_letters
@@ -46,24 +47,26 @@ class Game
     puts ""
   end
 
+  def game_over_check
+     if @revealed_letters == @secret_word_letters
+       @game_over == true
+     end
+  end
+
   def is_secret_word_letter(letter)
     if @secret_word_letters.include?(letter)
       @correct_guesses << letter
-      indices = []
-      @secret_word_letters.each do |x|
+      @secret_word_letters.each.with_index do |x, i|
         if x == letter
-          indices << @secret_word_letters.index(letter)
+          @revealed_letters[i] = letter
         end
       end
-    # TODO: Revealed letters not mapping properly, showing up as 'nil' in the command line
-    indices.each do |index|
-      @revealed_letters.map! { |x| x = letter if @revealed_letters.index(x) == index }
-    end
     else
       incorrect_guesses << letter
     end
   end
 
+  # Todo: Implement ending game if turns are over OR game over is true
   def play_game
     turn = 1
     while turn < @turns
@@ -79,6 +82,7 @@ class Game
       self.show_game_progress
       turn +=1
       puts "Turn #{turn} complete!"
+      self.game_over_check
     end
   end
 end
